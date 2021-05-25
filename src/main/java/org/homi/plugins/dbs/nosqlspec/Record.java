@@ -11,9 +11,6 @@ public class Record implements Component{
 		fields = new HashMap<String, Component>();
 	}
 	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -4884993885982117396L;
 
 	public void addField(String k, Component c) {
@@ -22,13 +19,11 @@ public class Record implements Component{
 
 	@Override
 	public <R> R getValue() {
-		// TODO Auto-generated method stub
 		return (R) fields;
 	}
 	
 	@Override
 	public String printComponent(int indent) {
-		
 		StringBuilder sb = new StringBuilder();
 		sb.append("{\n");
 		for(Map.Entry<String, Component> entry : fields.entrySet()) {

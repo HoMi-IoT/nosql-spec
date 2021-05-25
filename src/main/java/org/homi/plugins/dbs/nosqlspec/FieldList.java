@@ -22,13 +22,11 @@ public class FieldList implements Component{
 
 	@Override
 	public <R> R getValue() {
-		// TODO Auto-generated method stub
 		return (R) list;
 	}
 
 	@Override
 	public String printComponent(int indent) {
-		// TODO Auto-generated method stub
 		StringBuilder sb = new StringBuilder();
 		sb.append("[\n");
 		for(Component c : list) {

@@ -1,31 +1,36 @@
 package org.homi.plugins.dbs.nosqlspec;
 import org.homi.plugin.specification.*;
 public enum NoSQLSpec implements ISpecification{
-	QUERY(new ParameterType<>(Object.class), new ParameterType<>(Query.class, true)),
-	STORE(new ParameterType<>(Boolean.class), new ParameterType<>(String.class), new ParameterType<>(Record.class, true)),
-	DELETE(new ParameterType<>(Boolean.class), new ParameterType<>(Query.class, true)),
-	UPDATE(new ParameterType<>(Boolean.class), new ParameterType<>(String.class), new ParameterType<>(String.class), new ParameterType<>(Object.class));
+	QUERY( Object.class, new SerializableTypeDef<>(Query.class)),
+	STORE( Boolean.class, String.class, new SerializableTypeDef<>(Record.class)),
+	DELETE( Boolean.class, Query.class, true),
+	UPDATE( Boolean.class, String.class, String.class, Object.class);
 
-	ParameterType<?> returnType;
-	ParameterType<?>[] parameters;
- 
-	NoSQLSpec(ParameterType<?> returnType, ParameterType<?> ...params ) {
-		this.returnType = returnType;
-		this.parameters = params;
-		
+
+	private TypeDef<?>[] parameterTypes;
+	private TypeDef<?> returnType;
+	NoSQLSpec(Object returnType, Object...parameterTypes ) {
+		try {
+			this.returnType = SpecificationHelper.processType(returnType);
+			this.parameterTypes = new TypeDef<?>[parameterTypes.length];
+			
+			for(int i =0; i<parameterTypes.length; i++) {
+				this.parameterTypes[i] = SpecificationHelper.processType(parameterTypes[i]);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override
-	public ParameterType<?>[] getParameterTypes() {
-		
-		return this.parameters;
+	public TypeDef<?>[] getParameterTypes() {
+		return this.parameterTypes;
 	}
-
-	@Override
-	public ParameterType<?> getReturnType() {
 	
+	@Override
+	public TypeDef<?> getReturnType() {
 		return this.returnType;
 	}
-
+	
 
 }

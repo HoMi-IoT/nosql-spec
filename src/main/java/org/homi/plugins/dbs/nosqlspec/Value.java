@@ -21,7 +21,6 @@ public class Value<T extends Serializable> implements Component{
 
 	@Override
 	public String printComponent(int indent) {
-		// TODO Auto-generated method stub
 		return this.getValue().toString();
 	}
 	

@@ -6,7 +6,7 @@ import org.homi.plugin.specification.SpecificationID;
 import org.homi.plugin.specification.types.TypeDef;
 import org.homi.plugins.dbs.nosqlspec.query.IQueryComponent;
 import org.homi.plugins.dbs.nosqlspec.query.QueryBuilder;
-import org.homi.plugins.dbs.nosqlspec.record.IStorageComponent;
+import org.homi.plugins.dbs.nosqlspec.record.FieldList;
 import org.homi.plugins.dbs.nosqlspec.record.Record;
 
 import static org.homi.plugin.specification.SpecificationHelper.*;
@@ -14,19 +14,19 @@ import static org.homi.plugin.specification.Constraints.*;
 
 class Types {
 	public static TypeDef<?> RECORD = defineSerializableType(Record.class, notNull());
-	public static TypeDef<?> QUERY = defineSerializableType(IQueryComponent.class, notNull());
-	public static TypeDef<?> QUERY_RESULT = defineSerializableType(IStorageComponent.class, notNull());
+	public static TypeDef<?> QUERY = defineSerializableType(IQueryComponent.class);
+	public static TypeDef<?> QUERY_RESULT = defineSerializableType(FieldList.class, notNull());
 	public static TypeDef<?> COLLECTION_NAME = defineType(String.class, notNull(), minLength(5));
-	public static TypeDef<?> CLASSLOADER = defineType(ClassLoader.class, notNull());
 	public static TypeDef<?> AFFECTED_COUNT = defineType(Integer.class, notNull(), (count)->{return count>=0;} );
+//	public static TypeDef<?> CLASSLOADER = defineType(ClassLoader.class, notNull());
 }
 
 @SpecificationID(id = "NoSQLSpec")
 public enum NoSQLSpec implements ISpecification{
-	QUERY( Types.QUERY_RESULT, Types.COLLECTION_NAME, Types.QUERY, Types.CLASSLOADER),
+	QUERY( Types.QUERY_RESULT, Types.COLLECTION_NAME, Types.QUERY),
 	STORE( Types.AFFECTED_COUNT, Types.COLLECTION_NAME, Types.RECORD),
-	DELETE( Types.AFFECTED_COUNT, Types.COLLECTION_NAME, Types.QUERY);
-//	UPDATE( Boolean.class, String.class, String.class, Object.class);
+	DELETE( Types.AFFECTED_COUNT, Types.COLLECTION_NAME, Types.QUERY),
+	UPDATE( Types.AFFECTED_COUNT, Types.COLLECTION_NAME, Types.QUERY, Types.RECORD);
 
 	private List<TypeDef<?>> parameterTypes;
 	private TypeDef<?> returnType;

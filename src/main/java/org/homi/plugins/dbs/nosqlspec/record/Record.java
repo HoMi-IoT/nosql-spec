@@ -9,7 +9,7 @@ public class Record implements IStorageComponent{
 	private Map<String, IStorageComponent> fields;
 	
 	
-	public static Record of(Map<String, Serializable> map) {
+	public static Record of(Map<String, ? extends Serializable> map) {
 		Record record = new Record();
 		for(var entry: map.entrySet()) {
 			record.addField(entry.getKey(), new Value<>(entry.getValue()));

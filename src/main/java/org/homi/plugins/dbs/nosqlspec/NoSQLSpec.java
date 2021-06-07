@@ -37,11 +37,7 @@ public enum NoSQLSpec implements ISpecification{
 			this.parameterTypes = processTypes(parameterTypes);
 		} catch (Exception e) {
 			e.printStackTrace();
-		}
-		
-		
-		QueryBuilder.and(QueryBuilder.eq("", 1), QueryBuilder.or(QueryBuilder.eq("", 1), QueryBuilder.eq("", 1)));
-		
+		}		
 	}
 	
 	@Override

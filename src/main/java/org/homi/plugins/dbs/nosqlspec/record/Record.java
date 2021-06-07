@@ -1,11 +1,21 @@
 package org.homi.plugins.dbs.nosqlspec.record;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
 public class Record implements IStorageComponent{
 	
 	private Map<String, IStorageComponent> fields;
+	
+	
+	public static Record of(Map<String, Serializable> map) {
+		Record record = new Record();
+		for(var entry: map.entrySet()) {
+			record.addField(entry.getKey(), new Value<>(entry.getValue()));
+		}
+		return record;
+	}
 	
 	public Record() {
 		fields = new HashMap<String, IStorageComponent>();

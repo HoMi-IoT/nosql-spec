@@ -1,5 +1,8 @@
 package org.homi.plugins.dbs.nosqlspec.query;
 
+import java.io.Serializable;
+import java.util.List;
+
 public abstract class QueryBuilder {
 	
 	public static final IQueryComponent eq(String key, Object value) {
@@ -14,4 +17,11 @@ public abstract class QueryBuilder {
 		return new OrQueryComponent(queryComponents);
 	}
 	
+	public static final <T extends Serializable & Comparable<T>> IQueryComponent in(String key, List<T> values) {
+		return new InQueryComponent<T>(key, (T[]) values.toArray());
+	}
+
+	public static final <T extends Serializable & Comparable<T>> IQueryComponent in(String key, T[] values) {
+		return new InQueryComponent<T>(key, values);
+	}
 }

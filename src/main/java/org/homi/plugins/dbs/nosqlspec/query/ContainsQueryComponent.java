@@ -21,8 +21,7 @@ public class ContainsQueryComponent implements IQueryComponent {
 	
 	@Override
 	public <R> R accept(IQueryVisitor<R> qv) {
-		// TODO Auto-generated method stub
-		return null;
+		return qv.visit(this);
 	}
 
 }
